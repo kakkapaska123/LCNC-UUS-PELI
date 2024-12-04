@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bvf4blw6dnanl"]
+[gd_scene load_steps=24 format=3 uid="uid://bvf4blw6dnanl"]
 
 [ext_resource type="Texture2D" uid="uid://bbcisor8uxq1u" path="res://player/assetit/bunny_animations.png" id="1_fxtwa"]
 [ext_resource type="Script" path="res://player/scriptit/player.gd" id="1_qbkno"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dmjj2mogoclp" path="res://player/audio/swinging-sword-2.wav" id="7_d6dg6"]
 [ext_resource type="Script" path="res://player/scriptit/PlayerInteractionsHost.gd" id="8_jr413"]
 [ext_resource type="PackedScene" uid="uid://rp8mun4sqjmt" path="res://general/hurtbox/hurt_box.tscn" id="8_uftgj"]
+[ext_resource type="Script" path="res://player/scriptit/PlayerCamera.gd" id="9_kpq6b"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_h0db1"]
 radius = 5.0
@@ -288,6 +289,8 @@ attack_sound = ExtResource("7_d6dg6")
 decelerate_speed = 10.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
+editor_draw_limits = true
+script = ExtResource("9_kpq6b")
 
 [node name="Audio" type="Node2D" parent="."]
 
