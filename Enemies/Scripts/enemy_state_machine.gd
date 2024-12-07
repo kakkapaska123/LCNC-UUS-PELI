@@ -20,7 +20,6 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	change_state( current_state.physics(delta ) )
 	pass
-	
 
 
 
@@ -37,9 +36,9 @@ func initialize( _enemy : Enemy ) -> void:
 		s.init()
 	
 	if states.size() > 0:
-		change_state( states[0])
+		change_state( states[0] )
 		process_mode = Node.PROCESS_MODE_INHERIT
-
+	pass
 
 
 
