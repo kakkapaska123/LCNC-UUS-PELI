@@ -20,6 +20,7 @@ func init() -> void:
 	## Whate happens when the enemy enters this State?
 func enter() -> void:
 	enemy.velocity = Vector2.ZERO
+	@warning_ignore("narrowing_conversion")
 	_timer = randi_range( state_duration_min, state_duration_max )
 	enemy.update_animation( anim_name )
 	pass

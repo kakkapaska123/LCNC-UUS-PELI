@@ -6,17 +6,23 @@ signal enemy_damaged()
 const DIR_4 = [ Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP ]
 
 @export var hp : int = 3
+@export var speed: float = 100.0  # Add this to define the enemy's speed
 
 var cardinal_direction : Vector2 = Vector2.DOWN
 var direction : Vector2 = Vector2.ZERO
 var player : Player
 var invulnerable : bool = false
 
+
+signal DirectionChanged( new_direction: Vector2 ) #lisättiin tää kaverin kans
+
 @onready var animation_player : AnimationPlayer = $AnimationPlayer
 @onready var sprite : Sprite2D = $Sprite2D
 #@onready var hit_box : HitBox = $HitBox
 @onready var state_machine : EnemyStateMachine = $EnemyStateMachine
 # Called when the node enters the scene tree for the first time.
+
+
 
 
 func _ready() -> void:
@@ -49,7 +55,7 @@ func set_direction( _new_direction : Vector2 ) -> bool:
 		return false
 		
 	cardinal_direction = new_dir
-	direction_change.emit ( new_dir ) #täs joku ongelma?? playeri koodis tää sama kohta o eri tavala mut ei tää ees löydä semmost
+	DirectionChanged.emit ( new_dir ) #täs joku ongelma?? playeri koodis tää sama kohta o eri tavala mut ei tää ees löydä semmost
 	sprite.scale.x = -1 if cardinal_direction == Vector2.LEFT else 1
 	return true
 	
