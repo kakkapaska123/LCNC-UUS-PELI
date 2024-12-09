@@ -6,16 +6,26 @@ const DIR_4 = [ Vector2.RIGHT, Vector2.DOWN, Vector2.LEFT, Vector2.UP ]
 var direction : Vector2 = Vector2.ZERO
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var effect_animation_player: AnimationPlayer = $EffectAnimationPlayer
+
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: PlayerStateMachine = $StateMachine
+@onready var hit_box: HitBox = $Hitbox
+
 
 signal DirectionChanged( new_direction: Vector2 )
+signal player_damaged( hurt_box : HurtBox )
 
+var invulnerable : bool = false
+var hp : int = 6
+var max_hp : int = 6
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	PlayerManager.player = self
 	state_machine.Initialize(self)
+	hit_box.damaged.connect(_take_damage)
+	update_hp(99)
 	pass # Replace with function body.
 
 
@@ -63,3 +73,28 @@ func AnimDirection() -> String:
 		return "up"
 	else:
 		return "side"
+
+
+func _take_damage(hurt_box : HurtBox) -> void:
+	if invulnerable == true:
+		return
+	
+	if hp > 0:
+		update_hp( -hurt_box.damage )
+		player_damaged.emit( hurt_box )
+	pass
+
+
+func update_hp(delta : int) -> void:
+	hp = clampi( hp + delta, 0, max_hp )
+	pass
+
+func make_invulnerable( _duration : float = 1.0 ) -> void:
+	invulnerable = true
+	hit_box.monitoring = false
+	
+	await get_tree().create_timer( _duration ).timeout
+	
+	invulnerable = false
+	hit_box.monitoring = true
+	pass
