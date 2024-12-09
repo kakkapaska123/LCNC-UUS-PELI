@@ -7,10 +7,10 @@ var direction : Vector2 = Vector2.ZERO
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var effect_animation_player: AnimationPlayer = $EffectAnimationPlayer
-
+@onready var hit_box: HitBox = $Hitbox
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: PlayerStateMachine = $StateMachine
-@onready var hit_box: HitBox = $Hitbox
+
 
 
 signal DirectionChanged( new_direction: Vector2 )
@@ -58,7 +58,7 @@ func SetDirection() -> bool:
 		return false
 	
 	cardinal_direction = new_dir
-	DirectionChanged.emit(new_dir)
+	DirectionChanged.emit( new_dir )
 	sprite.scale.x = -1 if cardinal_direction == Vector2.LEFT else 1
 	return true
 
@@ -75,7 +75,7 @@ func AnimDirection() -> String:
 		return "side"
 
 
-func _take_damage(hurt_box : HurtBox) -> void:
+func _take_damage( hurt_box : HurtBox ) -> void:
 	if invulnerable == true:
 		return
 	

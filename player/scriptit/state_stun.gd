@@ -3,7 +3,6 @@ class_name State_Stun extends State
 @export var knockback_speed : float = 200.0
 @export var decelerate_speed : float = 10.0
 @export var invulnerable_duration : float = 1.0
-@onready var state_machine: PlayerStateMachine = $".."
 
 
 var hurt_box : HurtBox
@@ -19,13 +18,13 @@ func init() -> void:
 
 # What happens when the player enters this State?
 func Enter() -> void:
-	player.UpdateAnimation("stun")
-	player.animation_player.animation_finished.connect(_animation_finished)
+	player.animation_player.animation_finished.connect( _animation_finished )
 	
-	direction = player.global_position.direction_to(hurt_box.global_position)
+	direction = player.global_position.direction_to( hurt_box.global_position )
 	player.velocity = direction * -knockback_speed
 	player.set_direction()
 	
+	player.UpdateAnimation("stun")
 	player.make_invulnerable(invulnerable_duration)
 	player.effect_animation_player.play("damaged")
 	pass
